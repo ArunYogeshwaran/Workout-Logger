@@ -28,7 +28,8 @@ class MainActivity : ComponentActivity() {
                         getWorkoutsForDateUseCase = container.getWorkoutsForDateUseCase,
                         addCustomWorkoutTypeUseCase = container.addCustomWorkoutTypeUseCase,
                         getCustomWorkoutTypesUseCase = container.getCustomWorkoutTypesUseCase,
-                        deleteCustomWorkoutTypeUseCase = container.deleteCustomWorkoutTypeUseCase
+                        deleteCustomWorkoutTypeUseCase = container.deleteCustomWorkoutTypeUseCase,
+                        getRecentNotesUseCase = container.getRecentNotesUseCase
                     )
                 )
                 val historyViewModel: HistoryViewModel = viewModel(

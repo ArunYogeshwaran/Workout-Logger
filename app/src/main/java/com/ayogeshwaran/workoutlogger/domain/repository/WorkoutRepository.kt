@@ -22,5 +22,7 @@ interface WorkoutRepository {
     fun getCustomWorkoutTypes(): Flow<List<WorkoutType>>
 
     suspend fun deleteCustomWorkoutType(name: String, category: WorkoutCategory)
+
+    fun getRecentNotesForWorkoutType(workoutType: String): Flow<List<String>>
 }
 

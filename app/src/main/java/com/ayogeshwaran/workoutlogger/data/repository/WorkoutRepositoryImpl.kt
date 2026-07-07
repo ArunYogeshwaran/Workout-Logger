@@ -64,6 +64,10 @@ class WorkoutRepositoryImpl(
         dao.deleteCustomWorkoutTypeByName(name, category.name.lowercase())
     }
 
+    override fun getRecentNotesForWorkoutType(workoutType: String): Flow<List<String>> {
+        return dao.getRecentNotesForWorkoutType(workoutType)
+    }
+
     private fun WorkoutEntry.toEntity(): WorkoutEntryEntity {
         return WorkoutEntryEntity(
             id = id,

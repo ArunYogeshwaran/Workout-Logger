@@ -35,5 +35,8 @@ interface WorkoutDao {
 
     @Query("DELETE FROM custom_workout_types WHERE name = :name AND category = :category")
     suspend fun deleteCustomWorkoutTypeByName(name: String, category: String)
+
+    @Query("SELECT DISTINCT notes FROM workout_entries WHERE workoutType = :workoutType AND notes != '' ORDER BY timestamp DESC LIMIT 4")
+    fun getRecentNotesForWorkoutType(workoutType: String): Flow<List<String>>
 }
 

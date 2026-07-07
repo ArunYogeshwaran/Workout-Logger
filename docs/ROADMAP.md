@@ -17,8 +17,8 @@ Any new feature implementation **MUST** respect the following guidelines:
 ### 🔥 IMMEDIATE PRIORITY (BLOCKERS FOR NEXT RELEASE)
 *   **[x] E1: Update Play Store Size Wording**
     *   *Description:* Adjusted the Play Store listing size references to under 3.5MB (based on the verified download size of ~3.3MB on actual devices) and strongly highlighted the Auto Backup restore behavior.
-*   **[ ] E2: Clean Up Release Notes (What's New)**
-    *   *Description:* Review and revise the "What's new" release notes for the next Play Store update to remove all technical jargon (e.g., mentions of ADB commands). Ensure all text is sleek, simple, and strictly user-facing.
+*   **[x] E2: Clean Up Release Notes (What's New)**
+    *   *Description:* Created a sleek, 100% user-focused "What's New" release notes draft in PLAY_STORE_LISTING.md, completely free of any technical jargon.
 
 ### Track A: UI & Quick-Logging Enhancements
 *   **[ ] A1: Routine Templates (Quick-Log)**

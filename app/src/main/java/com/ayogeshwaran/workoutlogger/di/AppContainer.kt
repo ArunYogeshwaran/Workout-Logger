@@ -11,6 +11,7 @@ import com.ayogeshwaran.workoutlogger.domain.usecase.DeleteWorkoutUseCase
 import com.ayogeshwaran.workoutlogger.domain.usecase.GetCustomWorkoutTypesUseCase
 import com.ayogeshwaran.workoutlogger.domain.usecase.GetDatesWithWorkoutsUseCase
 import com.ayogeshwaran.workoutlogger.domain.usecase.GetWorkoutsForDateUseCase
+import com.ayogeshwaran.workoutlogger.domain.usecase.GetRecentNotesUseCase
 
 class AppContainer(context: Context) {
 
@@ -26,5 +27,6 @@ class AppContainer(context: Context) {
     val addCustomWorkoutTypeUseCase = AddCustomWorkoutTypeUseCase(repository)
     val getCustomWorkoutTypesUseCase = GetCustomWorkoutTypesUseCase(repository)
     val deleteCustomWorkoutTypeUseCase = DeleteCustomWorkoutTypeUseCase(repository)
+    val getRecentNotesUseCase = GetRecentNotesUseCase(repository)
 }
 

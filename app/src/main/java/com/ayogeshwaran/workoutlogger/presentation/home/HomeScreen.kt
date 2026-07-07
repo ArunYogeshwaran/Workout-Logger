@@ -3,6 +3,7 @@ package com.ayogeshwaran.workoutlogger.presentation.home
 import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -16,16 +17,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
@@ -86,6 +92,7 @@ fun HomeScreen(
 
     val cardioTypes by viewModel.cardioTypes.collectAsStateWithLifecycle()
     val gymTypes by viewModel.gymTypes.collectAsStateWithLifecycle()
+    val notesSuggestions by viewModel.notesSuggestions.collectAsStateWithLifecycle()
 
     var showAddCustomDialog by remember { mutableStateOf(false) }
     var customWorkoutCategory by remember { mutableStateOf<WorkoutCategory?>(null) }
@@ -524,17 +531,57 @@ fun HomeScreen(
                                     singleLine = false,
                                     maxLines = 3,
                                     trailingIcon = {
-                                        if (noteValue.isNotEmpty()) {
-                                            IconButton(onClick = {
-                                                viewModel.onWorkoutNotesChanged(
-                                                    workoutType,
-                                                    ""
-                                                )
-                                            }) {
-                                                Icon(
-                                                    imageVector = Icons.Default.Clear,
-                                                    contentDescription = stringResource(R.string.clear_notes_desc)
-                                                )
+                                        val suggestions = notesSuggestions[workoutType] ?: emptyList()
+                                        val filteredSuggestions = suggestions.filter { it != noteValue }
+                                        Row(
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            if (filteredSuggestions.isNotEmpty()) {
+                                                Box {
+                                                    var showDropdown by remember { mutableStateOf(false) }
+                                                    IconButton(onClick = { showDropdown = true }) {
+                                                        Icon(
+                                                            imageVector = Icons.Default.ArrowDropDown,
+                                                            contentDescription = "Show past notes"
+                                                        )
+                                                    }
+                                                    DropdownMenu(
+                                                        expanded = showDropdown,
+                                                        onDismissRequest = { showDropdown = false }
+                                                    ) {
+                                                        filteredSuggestions.forEach { suggestionText ->
+                                                            DropdownMenuItem(
+                                                                text = {
+                                                                    Text(
+                                                                        text = suggestionText,
+                                                                        maxLines = 1,
+                                                                        overflow = TextOverflow.Ellipsis
+                                                                    )
+                                                                },
+                                                                onClick = {
+                                                                    viewModel.onWorkoutNotesChanged(
+                                                                        workoutType,
+                                                                        suggestionText
+                                                                    )
+                                                                    showDropdown = false
+                                                                }
+                                                            )
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            if (noteValue.isNotEmpty()) {
+                                                IconButton(onClick = {
+                                                    viewModel.onWorkoutNotesChanged(
+                                                        workoutType,
+                                                        ""
+                                                    )
+                                                }) {
+                                                    Icon(
+                                                        imageVector = Icons.Default.Clear,
+                                                        contentDescription = stringResource(R.string.clear_notes_desc)
+                                                    )
+                                                }
                                             }
                                         }
                                     },

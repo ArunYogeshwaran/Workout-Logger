@@ -47,6 +47,10 @@ This workspace contains project-specific rules, design patterns, and lessons lea
 *   **Rule:** Whenever preparing a release build or pushing a release tag, the agent must automatically generate a professional Release Title and Release Notes tailored for GitHub based on the changelog updates, and prompt the user to copy/paste them.
 *   **Rule (Play Store Listing & Notes):** Future changes should **not** include anything technical in the Play Store listing or "What's new" release notes. Avoid technical jargon (e.g., ADB commands). Keep all public-facing text sleek, simple, and strictly user-focused.
 
+### 6. Notes Auto-Suggestions in Bottom Sheet
+*   **Problem:** Displaying suggestions inline can clutter the screen or shift the keyboard layout, causing layout overlap or input focus issues.
+*   **Rule:** Suggestions must be loaded dynamically based on the current active workout type using `getRecentNotesForWorkoutType` and deduplicated against the user's active input. Suggestions must be hidden inside a trailing drop-down menu (`DropdownMenu`) on the text field, accessible only when suggestions are available and the user clicks the drop-down arrow icon.
+
 ---
 
 ## ⚖️ Compliance & Rating Rules

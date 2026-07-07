@@ -41,6 +41,7 @@ Features:
 
 • Ultra-lightweight (under 3.5MB download) — installs instantly, negligible battery use
 • Log workouts with one tap — Cardio, Gym, or any preset type
+• Smart suggestions — auto-fill note descriptions instantly using past entries for each workout type
 • Pick a date and time, or just log "right now"
 • Swipe to delete, with undo
 • Monthly calendar view and rolling 7-day weekly view
@@ -51,6 +52,15 @@ Features:
 
 This app does one thing and does it well.
 If you're tired of bloated apps — this is for you.
+
+---
+
+## What's New (500 chars max)
+
+• Smart Notes Auto-Suggestions: Save time by auto-filling descriptions with your past workout notes. Tap the drop-down arrow icon in the note box to see recent logs for each exercise type.
+• Lightweight & Optimized: Reduced the download size to under 3.5MB for instant install and minimal battery usage.
+• Secure Cloud Backups: Restores your workouts automatically from Google Drive when you reinstall or switch devices.
+• App Stability: Performance tuning and navigation fixes for a smoother calendar and tracking flow.
 
 ---
 

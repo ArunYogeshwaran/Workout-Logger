@@ -11,6 +11,7 @@ import com.ayogeshwaran.workoutlogger.domain.usecase.DeleteCustomWorkoutTypeUseC
 import com.ayogeshwaran.workoutlogger.domain.usecase.DeleteWorkoutUseCase
 import com.ayogeshwaran.workoutlogger.domain.usecase.GetCustomWorkoutTypesUseCase
 import com.ayogeshwaran.workoutlogger.domain.usecase.GetWorkoutsForDateUseCase
+import com.ayogeshwaran.workoutlogger.domain.usecase.GetRecentNotesUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -92,6 +93,16 @@ class FakeWorkoutRepository : WorkoutRepository {
         customWorkoutTypes.value =
             customWorkoutTypes.value.filterNot { it.name == name && it.category == category }
     }
+
+    override fun getRecentNotesForWorkoutType(workoutType: String): Flow<List<String>> {
+        return workouts.map { list ->
+            list.filter { it.workoutType == workoutType && it.notes.isNotEmpty() }
+                .sortedByDescending { it.timestamp }
+                .map { it.notes }
+                .distinct()
+                .take(4)
+        }
+    }
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -111,7 +122,8 @@ class HomeViewModelTest {
             getWorkoutsForDateUseCase = GetWorkoutsForDateUseCase(repository),
             addCustomWorkoutTypeUseCase = AddCustomWorkoutTypeUseCase(repository),
             getCustomWorkoutTypesUseCase = GetCustomWorkoutTypesUseCase(repository),
-            deleteCustomWorkoutTypeUseCase = DeleteCustomWorkoutTypeUseCase(repository)
+            deleteCustomWorkoutTypeUseCase = DeleteCustomWorkoutTypeUseCase(repository),
+            getRecentNotesUseCase = GetRecentNotesUseCase(repository)
         )
     }
 

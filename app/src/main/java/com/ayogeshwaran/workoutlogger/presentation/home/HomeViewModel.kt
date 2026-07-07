@@ -12,6 +12,7 @@ import com.ayogeshwaran.workoutlogger.domain.usecase.AddWorkoutUseCase
 import com.ayogeshwaran.workoutlogger.domain.usecase.DeleteCustomWorkoutTypeUseCase
 import com.ayogeshwaran.workoutlogger.domain.usecase.DeleteWorkoutUseCase
 import com.ayogeshwaran.workoutlogger.domain.usecase.GetCustomWorkoutTypesUseCase
+import com.ayogeshwaran.workoutlogger.domain.usecase.GetRecentNotesUseCase
 import com.ayogeshwaran.workoutlogger.domain.usecase.GetWorkoutsForDateUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -21,9 +22,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -58,7 +61,8 @@ class HomeViewModel(
     private val getWorkoutsForDateUseCase: GetWorkoutsForDateUseCase,
     private val addCustomWorkoutTypeUseCase: AddCustomWorkoutTypeUseCase,
     private val getCustomWorkoutTypesUseCase: GetCustomWorkoutTypesUseCase,
-    private val deleteCustomWorkoutTypeUseCase: DeleteCustomWorkoutTypeUseCase
+    private val deleteCustomWorkoutTypeUseCase: DeleteCustomWorkoutTypeUseCase,
+    private val getRecentNotesUseCase: GetRecentNotesUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUiState())
@@ -74,6 +78,23 @@ class HomeViewModel(
             getWorkoutsForDateUseCase(startOfDay, endOfDay)
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    val notesSuggestions: StateFlow<Map<WorkoutType, List<String>>> = _uiState
+        .map { it.selectedWorkoutTypes }
+        .distinctUntilChanged()
+        .flatMapLatest { selectedTypes ->
+            if (selectedTypes.isEmpty()) {
+                flowOf(emptyMap())
+            } else {
+                val flows = selectedTypes.map { type ->
+                    getRecentNotesUseCase(type.name).map { notes -> type to notes }
+                }
+                combine(flows) { pairs ->
+                    pairs.toMap()
+                }
+            }
+        }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
     val cardioTypes: StateFlow<List<WorkoutType>> = combine(
         flowOf(PresetWorkoutTypes.filter { it.category == WorkoutCategory.CARDIO }),
@@ -260,7 +281,8 @@ class HomeViewModel(
         private val getWorkoutsForDateUseCase: GetWorkoutsForDateUseCase,
         private val addCustomWorkoutTypeUseCase: AddCustomWorkoutTypeUseCase,
         private val getCustomWorkoutTypesUseCase: GetCustomWorkoutTypesUseCase,
-        private val deleteCustomWorkoutTypeUseCase: DeleteCustomWorkoutTypeUseCase
+        private val deleteCustomWorkoutTypeUseCase: DeleteCustomWorkoutTypeUseCase,
+        private val getRecentNotesUseCase: GetRecentNotesUseCase
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -270,7 +292,8 @@ class HomeViewModel(
                 getWorkoutsForDateUseCase,
                 addCustomWorkoutTypeUseCase,
                 getCustomWorkoutTypesUseCase,
-                deleteCustomWorkoutTypeUseCase
+                deleteCustomWorkoutTypeUseCase,
+                getRecentNotesUseCase
             ) as T
         }
     }
