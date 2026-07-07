@@ -14,9 +14,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import android.content.Intent
+import android.content.ActivityNotFoundException
+import android.content.Context
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -204,3 +208,35 @@ fun EditNotesDialog(
         }
     )
 }
+
+fun shareWorkouts(context: Context, dateString: String, workouts: List<WorkoutEntry>) {
+    val packageName = context.packageName
+    val playStoreLink = "https://play.google.com/store/apps/details?id=$packageName"
+    
+    val stringBuilder = java.lang.StringBuilder()
+    stringBuilder.append("💪 My Workouts for $dateString:\n")
+    
+    workouts.forEach { workout ->
+        val displayName = workout.localizedType(context.resources)
+        if (workout.notes.isNotBlank()) {
+            val cleanNotes = workout.notes.trim().replace("\n", ", ")
+            stringBuilder.append("• $displayName ($cleanNotes)\n")
+        } else {
+            stringBuilder.append("• $displayName\n")
+        }
+    }
+    
+    stringBuilder.append("\nLog your workouts offline, ad-free, and privately with FlinkLog! Download it here:\n$playStoreLink")
+    
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, stringBuilder.toString())
+    }
+    val chooser = Intent.createChooser(intent, "Share Workouts")
+    try {
+        context.startActivity(chooser)
+    } catch (_: ActivityNotFoundException) {
+        // No sharing activity available
+    }
+}
+

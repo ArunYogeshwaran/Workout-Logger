@@ -38,6 +38,19 @@ fun WorkoutEntry.localizedType(): String {
     return preset?.localizedName() ?: workoutType
 }
 
+fun WorkoutType.localizedName(resources: android.content.res.Resources): String {
+    return if (nameRes != 0) {
+        resources.getString(nameRes)
+    } else {
+        name
+    }
+}
+
+fun WorkoutEntry.localizedType(resources: android.content.res.Resources): String {
+    val preset = PresetWorkoutTypes.find { it.name.equals(workoutType, ignoreCase = true) }
+    return preset?.localizedName(resources) ?: workoutType
+}
+
 val PresetWorkoutTypes = listOf(
     // Cardio & General
     WorkoutType("Running", "🏃", WorkoutCategory.CARDIO, R.string.workout_type_running),

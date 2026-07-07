@@ -23,6 +23,7 @@ Instead of keeping a single massive requirements or test suite document (which i
 | [4. Google Auto Backup](../docs/features/auto_backup.md) | SQLite DB, WAL/SHM streams configuration | End-to-end data restore on device transitions |
 | [5. On-Device AI (AppFunctions)](../docs/features/appfunctions.md) | Local assistant hooks, log/query APIs, routines recommendations | ADB commands execution, on-device unit tests |
 | [6. Notes Suggestions](../docs/features/notes_suggestions.md) | Contextual notes suggestions using historical inputs | Suggestion chips rendering, isolation, and auto-fill |
+| [7. Workout Sharing](../docs/features/sharing.md) | Formatted workout sharing via Android Intents | Text composition formatting and dynamic UI share button toggle |
 
 ---
 

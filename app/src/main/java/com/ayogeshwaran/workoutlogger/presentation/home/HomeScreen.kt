@@ -24,6 +24,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Info
@@ -73,6 +74,7 @@ import com.ayogeshwaran.workoutlogger.domain.model.localizedName
 import com.ayogeshwaran.workoutlogger.presentation.components.EditNotesDialog
 import com.ayogeshwaran.workoutlogger.presentation.components.EmptyHomeIllustration
 import com.ayogeshwaran.workoutlogger.presentation.components.SwipeToDeleteWorkoutCard
+import com.ayogeshwaran.workoutlogger.presentation.components.shareWorkouts
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
@@ -323,11 +325,39 @@ fun HomeScreen(
             // Section header for today's workouts
             item {
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = stringResource(R.string.logged_workouts_today),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = stringResource(R.string.logged_workouts_today),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    if (workouts.isNotEmpty()) {
+                        val todayString = remember(context) {
+                            android.text.format.DateUtils.formatDateTime(
+                                context,
+                                System.currentTimeMillis(),
+                                android.text.format.DateUtils.FORMAT_SHOW_DATE or
+                                        android.text.format.DateUtils.FORMAT_SHOW_WEEKDAY or
+                                        android.text.format.DateUtils.FORMAT_SHOW_YEAR
+                            )
+                        }
+                        IconButton(
+                            onClick = { shareWorkouts(context, todayString, workouts) },
+                            modifier = Modifier.size(36.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Share,
+                                contentDescription = stringResource(R.string.share_workouts_desc),
+                                modifier = Modifier.size(20.dp),
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
+                }
             }
 
             // Swipe-to-delete onboarding tooltip

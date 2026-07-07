@@ -51,6 +51,9 @@ This workspace contains project-specific rules, design patterns, and lessons lea
 *   **Problem:** Displaying suggestions inline can clutter the screen or shift the keyboard layout, causing layout overlap or input focus issues.
 *   **Rule:** Suggestions must be loaded dynamically based on the current active workout type using `getRecentNotesForWorkoutType` and deduplicated against the user's active input. Suggestions must be hidden inside a trailing drop-down menu (`DropdownMenu`) on the text field, accessible only when suggestions are available and the user clicks the drop-down arrow icon.
 
+### 7. Workout Sharing
+*   **Rule:** When adding or updating share features, do not duplicate text formatting logic in Composable files. Use the shared `shareWorkouts` helper in `WorkoutComponents.kt` to compose the shared content, ensuring consistent typography (bullet points, emojis, tagline, and app link).
+
 ---
 
 ## ⚖️ Compliance & Rating Rules
