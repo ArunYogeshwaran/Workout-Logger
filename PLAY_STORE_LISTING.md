@@ -4,13 +4,13 @@
 
 ## App Name (30 chars max)
 
-FlinkLog: Tiny Workout Logger (<3MB)
+FlinkLog: Tiny Workout Logger
 
 ---
 
 ## Short Description (80 chars max)
 
-Tiny <3MB workout log. Simple, fast, offline, no cloud, no ads, no tracking.
+Tiny, lightweight workout log. Simple, fast, offline, no ads, no tracking.
 
 ---
 
@@ -39,13 +39,13 @@ Your data stays on your device. Period.
 
 Features:
 
-• Ultra-lightweight (under 3MB) — installs instantly, negligible battery use
+• Ultra-lightweight (under 3.5MB download) — installs instantly, negligible battery use
 • Log workouts with one tap — Cardio, Gym, or any preset type
 • Pick a date and time, or just log "right now"
 • Swipe to delete, with undo
 • Monthly calendar view and rolling 7-day weekly view
 • 100% open-source & offline — code is auditable on GitHub
-• Worry-free device switching — securely backed up to your Google account
+• Worry-free uninstall & reinstall — your data is securely backed up via Google Auto Backup and restores automatically upon reinstall or device switch
 • Android 16 AppFunctions integration — let your on-device assistant log workouts and query history locally
 • Material You theming with light and dark mode
 

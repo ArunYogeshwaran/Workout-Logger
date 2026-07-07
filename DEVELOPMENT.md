@@ -6,7 +6,7 @@ All developers (human and AI agents) contributing to FlinkLog must follow these 
 
 ## 🏗️ 1. Core Architecture
 
-FlinkLog is designed as an offline-first, lightweight (<3MB footprint), privacy-first Android application. It implements clean architecture with MVVM:
+FlinkLog is designed as an offline-first, lightweight (<3.5MB footprint), privacy-first Android application. It implements clean architecture with MVVM:
 *   **Presentation Layer:** Jetpack Compose using Material You dynamic color themes. Lightweight graphics (e.g. empty states, brand logo) are drawn programmatically using Compose `Canvas` to minimize package size.
 *   **Domain Layer:** Decoupled interfaces, use cases, and models representing workouts and history.
 *   **Data Layer:** Room SQLite storage (configured with robust system Auto Backup guidelines covering DB, WAL, and SHM files).
@@ -122,7 +122,7 @@ The compiled, signed release bundle will automatically be copied and renamed in:
 `app/build/outputs/renamed-bundle/flinklog-<VERSION_NAME>.aab`
 
 ### Step 5: Verify App Size Footprint
-Audit the size of the compiled, version-synced `.aab` file to ensure the package remains under the **3MB** target:
+Audit the size of the compiled, version-synced `.aab` file to ensure the package remains under the **3.5MB** target:
 ```bash
 ls -lh app/build/outputs/renamed-bundle/flinklog-<VERSION_NAME>.aab
 ```

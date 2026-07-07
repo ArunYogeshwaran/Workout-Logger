@@ -6,13 +6,19 @@ This document outlines planned features, user-experience enhancements, and techn
 
 ## 🎯 Core Engineering Constraints
 Any new feature implementation **MUST** respect the following guidelines:
-1.  **Lightweight Footprint (<3MB):** Do not add external libraries that bloat the APK size (e.g., avoid large chart or network libraries). Prefer custom, lightweight Compose `Canvas` implementations.
+1.  **Lightweight Footprint (<3.5MB):** Do not add external libraries that bloat the APK size (e.g., avoid large chart or network libraries). Prefer custom, lightweight Compose `Canvas` implementations.
 2.  **Privacy-First & Offline-First:** No remote databases, user accounts, analytics tracking, or cloud APIs. All data must reside strictly in the local SQLite database.
 3.  **Encrypted Sync via OS:** Rely strictly on **Google Auto Backup** for cloud transfers/backups.
 
 ---
 
 ## 📋 1. Roadmap Tracks & Tasks
+
+### 🔥 IMMEDIATE PRIORITY (BLOCKERS FOR NEXT RELEASE)
+*   **[x] E1: Update Play Store Size Wording**
+    *   *Description:* Adjusted the Play Store listing size references to under 3.5MB (based on the verified download size of ~3.3MB on actual devices) and strongly highlighted the Auto Backup restore behavior.
+*   **[ ] E2: Clean Up Release Notes (What's New)**
+    *   *Description:* Review and revise the "What's new" release notes for the next Play Store update to remove all technical jargon (e.g., mentions of ADB commands). Ensure all text is sleek, simple, and strictly user-facing.
 
 ### Track A: UI & Quick-Logging Enhancements
 *   **[ ] A1: Routine Templates (Quick-Log)**
@@ -58,7 +64,7 @@ Any new feature implementation **MUST** respect the following guidelines:
 ## 🛠️ 2. Verification Protocol for Roadmap Tasks
 Before mark-completing any task from this roadmap:
 1.  **Create a Spec File:** Draft a specification file in `docs/features/` mapping the new functionality and automated verify steps.
-2.  **Ensure Zero Bloat:** Check the release build APK size to guarantee the app remains under 3MB:
+2.  **Ensure Zero Bloat:** Check the release build APK size to guarantee the app remains under 3.5MB:
     ```bash
     ./gradlew assembleRelease
     ```

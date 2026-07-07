@@ -43,8 +43,9 @@ This workspace contains project-specific rules, design patterns, and lessons lea
 *   **Problem:** AppFunctions rely heavily on compilation reflection. Code shrinkers (like R8) will strip out or rename metadata classes in release builds, causing runtime AppFunction execution failure.
 *   **Rule:** Keep proguard rules in `app/proguard-rules.pro` to safeguard AppFunction compilation pipelines.
 
-### 5. Release Preparation & GitHub Release Notes
+### 5. Release Preparation & App Store / GitHub Release Notes
 *   **Rule:** Whenever preparing a release build or pushing a release tag, the agent must automatically generate a professional Release Title and Release Notes tailored for GitHub based on the changelog updates, and prompt the user to copy/paste them.
+*   **Rule (Play Store Listing & Notes):** Future changes should **not** include anything technical in the Play Store listing or "What's new" release notes. Avoid technical jargon (e.g., ADB commands). Keep all public-facing text sleek, simple, and strictly user-focused.
 
 ---
 
