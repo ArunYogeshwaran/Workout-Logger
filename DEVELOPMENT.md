@@ -63,7 +63,23 @@ FlinkLog is designed as an offline-first, lightweight (<3.5MB footprint), privac
 
 ---
 
-## 🛡️ 4. Obfuscation & AppFunctions Reflection Keep Rules
+## 💾 4. Database Schema Migrations & Data Preservation
+
+Because FlinkLog is configured for Google Auto Backup, when users reinstall the app, their older database version is restored before first launch. If you upgrade the schema without a migration path, Room will wipe all data due to fallback policies.
+*   **Rule 1: Writing Migrations:** Always create custom migrations (using the `Migration` API) for any database schema changes. Example:
+    ```kotlin
+    val MIGRATION_3_4 = object : Migration(3, 4) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE workout_entries ADD COLUMN is_favorite INTEGER NOT NULL DEFAULT 0")
+        }
+    }
+    ```
+*   **Rule 2: Registrations:** Add all migration rules to `WorkoutDatabase.getInstance(context)` via `.addMigrations(MIGRATION_3_4)`.
+*   **Rule 3: Avoid Destructive Fallbacks:** Never increment DB versions in production without a verified migration path.
+
+---
+
+## 🛡️ 5. Obfuscation & AppFunctions Reflection Keep Rules
 
 Android 16 AppFunctions rely heavily on reflection during compilation. R8 optimization will strip these bindings in release builds. Ensure `app/proguard-rules.pro` contains the required keep rules:
 ```proguard
@@ -73,7 +89,7 @@ Android 16 AppFunctions rely heavily on reflection during compilation. R8 optimi
 
 ---
 
-## 🧪 5. Verification Commands
+## 🧪 6. Verification Commands
 
 Before staging or committing any code changes, always verify compilation and lint metrics locally:
 ```bash
@@ -83,7 +99,7 @@ All commits must pass both compilation and Android Lint checks without errors.
 
 ---
 
-## 🚀 6. Pre-Release Verification & Build Protocol
+## 🚀 7. Pre-Release Verification & Build Protocol
 
 Before every release, AI agents and developers **MUST** run the following checklist to verify code health, ensure CalVer alignment, configure release signing, and compile the production artifact:
 

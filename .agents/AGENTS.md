@@ -54,6 +54,14 @@ This workspace contains project-specific rules, design patterns, and lessons lea
 ### 7. Workout Sharing
 *   **Rule:** When adding or updating share features, do not duplicate text formatting logic in Composable files. Use the shared `shareWorkouts` helper in `WorkoutComponents.kt` to compose the shared content, ensuring consistent typography (bullet points, emojis, tagline, and app link).
 
+### 8. Room Database Schema Migrations & Data Preservation
+*   **Problem:** If you increment the database version in `WorkoutDatabase` without writing a migration path, Room's destructive fallback policy (`fallbackToDestructiveMigration(true)`) will silently drop all user tables and recreate them. This results in complete user data loss and eventual backup corruption (since the restored old cloud backup gets overwritten by the empty version on the next sync cycle).
+*   **Rule:** For any changes to entity classes or database schema, you MUST:
+    1. Increment the database `version` in `WorkoutDatabase.kt`.
+    2. Write a custom `Migration` class detailing the schema modification SQL queries (e.g. `ALTER TABLE`, `CREATE TABLE`).
+    3. Register the migration object in the Room database builder using `.addMigrations()`.
+    4. Never rely solely on destructive fallbacks for schema modifications in release updates.
+
 ---
 
 ## ⚖️ Compliance & Rating Rules
