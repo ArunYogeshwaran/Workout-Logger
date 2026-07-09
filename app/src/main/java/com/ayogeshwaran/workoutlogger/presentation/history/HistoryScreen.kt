@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -47,6 +48,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ayogeshwaran.workoutlogger.R
@@ -119,8 +121,8 @@ fun HistoryScreen(
                         onDateSelected = { year, month, day ->
                             viewModel.onDateSelected(year, month, day)
                         },
-                        onPreviousDay = { viewModel.adjustSelectedDate(-1) },
-                        onNextDay = { viewModel.adjustSelectedDate(1) },
+                        onPreviousWeek = { viewModel.adjustSelectedDate(-7) },
+                        onNextWeek = { viewModel.adjustSelectedDate(7) },
                         workoutsCount = workouts.size
                     )
                 }
@@ -521,10 +523,12 @@ private fun WeeklyView(
     selectedDate: Long,
     datesWithWorkouts: Set<Long>,
     onDateSelected: (Int, Int, Int) -> Unit,
-    onPreviousDay: () -> Unit,
-    onNextDay: () -> Unit,
+    onPreviousWeek: () -> Unit,
+    onNextWeek: () -> Unit,
     workoutsCount: Int
 ) {
+    val context = LocalContext.current
+    val resources = LocalResources.current
     val todayMidnight = remember { todayMidnight() }
     val lastSevenDays = remember(selectedDate) {
         val list = mutableListOf<Long>()
@@ -542,18 +546,42 @@ private fun WeeklyView(
         lastSevenDays.count { datesWithWorkouts.contains(it) }
     }
 
-    val rangeString = remember(selectedDate) {
+    val titleString = remember(selectedDate) {
+        val cal = Calendar.getInstance().apply { timeInMillis = selectedDate }
+        val format = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
+        "Week ending ${format.format(cal.time)}"
+    }
+
+    val subtitleString = remember(selectedDate, workoutsCount, activeDaysCount) {
         val startCal = Calendar.getInstance()
             .apply { timeInMillis = selectedDate; add(Calendar.DAY_OF_YEAR, -6) }
         val endCal = Calendar.getInstance().apply { timeInMillis = selectedDate }
 
         val format = SimpleDateFormat("MMM d", Locale.getDefault())
-        val formatWithYear = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
-
-        if (startCal.get(Calendar.YEAR) == endCal.get(Calendar.YEAR)) {
-            "${format.format(startCal.time)} - ${formatWithYear.format(endCal.time)}"
+        val range = if (startCal.get(Calendar.YEAR) == endCal.get(Calendar.YEAR)) {
+            "${format.format(startCal.time)} - ${format.format(endCal.time)}"
         } else {
+            val formatWithYear = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
             "${formatWithYear.format(startCal.time)} - ${formatWithYear.format(endCal.time)}"
+        }
+        "$range • $workoutsCount workouts • $activeDaysCount active"
+    }
+
+    val calendar = remember(selectedDate) {
+        Calendar.getInstance().apply { timeInMillis = selectedDate }
+    }
+
+    val datePickerDialog = remember(context, selectedDate) {
+        android.app.DatePickerDialog(
+            context,
+            { _, year, month, dayOfMonth ->
+                onDateSelected(year, month, dayOfMonth)
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        ).apply {
+            setTitle(resources.getString(R.string.select_week_end_date))
         }
     }
 
@@ -572,32 +600,35 @@ private fun WeeklyView(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = onPreviousDay) {
+                IconButton(onClick = onPreviousWeek) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                         contentDescription = stringResource(R.string.prev_month_desc)
                     )
                 }
 
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .clip(MaterialTheme.shapes.small)
+                        .clickable { datePickerDialog.show() }
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
+                ) {
                     Text(
-                        text = rangeString,
+                        text = titleString,
                         style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurface
+                        color = MaterialTheme.colorScheme.onSurface,
+                        textDecoration = TextDecoration.Underline
                     )
                     Spacer(modifier = Modifier.height(2.dp))
                     Text(
-                        text = stringResource(
-                            R.string.weekly_view_subtitle,
-                            workoutsCount,
-                            activeDaysCount
-                        ),
+                        text = subtitleString,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
 
-                IconButton(onClick = onNextDay) {
+                IconButton(onClick = onNextWeek) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                         contentDescription = stringResource(R.string.next_month_desc)
