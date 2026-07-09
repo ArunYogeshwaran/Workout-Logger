@@ -4,6 +4,19 @@ All notable changes to the FlinkLog project are documented in this file. The for
 on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2026.7.1] - 2026-07-09
+
+### Added
+
+* **Notes Auto-Suggestions:** Context-aware suggestions drop-down menu under the text field inside the log bottom sheet. Displays up to 4 most recent distinct notes based on historical inputs for that specific workout type.
+* **Workout Sharing:** Easily share your logged workouts from any day (from Home or History screens) formatted as a compact bulleted list with type-specific emojis and a Play Store installation link.
+* **Underlined Weekly View Range Picker:** Underlined the "Week ending" header in the history weekly strip and integrated a `DatePickerDialog` to easily jump to any week range, with the arrow controls shifting by one full week at a time.
+* **Technical Guidelines & Database Safety Rules:** Registered rules for developers and agents to prevent database wipes during schema updates under the Google Auto Backup lifecycle.
+
+### Changed
+
+* **Play Store Listing:** Refined and simplified listing details, keeping it clean and ready for subsequent General Availability (GA) releases.
+
 ---
 
 ## [2026.6.1] - 2026-06-18
