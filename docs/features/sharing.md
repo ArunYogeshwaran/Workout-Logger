@@ -15,8 +15,8 @@ This document details the specifications and verification test cases for the wor
 ## 📋 2. Functional Requirements
 1.  **Contextual Gathering:** Gathers all logged workouts for a specific date (e.g. all activities completed on *July 7, 2026*).
 2.  **Nicely Formatted Text:** Generates a clean text representation:
-    *   A title displaying the date (e.g. `💪 My Workouts for Tuesday, Jul 7, 2026:`).
-    *   A bulleted list containing the exercise category/type.
+    *   The date on the very first line (e.g. `📅 Tuesday, Jul 7, 2026`).
+    *   A bulleted list containing the exercise category/type with its respective emoji.
     *   Notes/descriptions nested in brackets next to the exercise title.
     *   A closing tagline: `Log your workouts offline, ad-free, and privately with FlinkLog! Download it here:` followed by the Play Store installation link.
 3.  **Android Share Intent:** Invokes the standard system-level share chooser, allowing users to share the formatted text to any external communication app (e.g. WhatsApp, Messages, Slack, Email).
@@ -35,8 +35,8 @@ This document details the specifications and verification test cases for the wor
 6.  Choose to copy to clipboard or share to a text app.
 7.  *Verify:* The shared text reads:
     ```text
-    💪 My Workouts for <Today's Date>:
-    • Cycling (13 km commute)
+    📅 <Today's Date>
+    • 🚴 Cycling (13 km commute)
 
     Log your workouts offline, ad-free, and privately with FlinkLog! Download it here:
     https://play.google.com/store/apps/details?id=com.ayogeshwaran.workoutlogger
@@ -49,4 +49,4 @@ This document details the specifications and verification test cases for the wor
 4.  Switch to the **Weekly View**.
 5.  *Verify:* A Share icon appears next to each day's date header that contains logged workouts.
 6.  Tap the **Share** button.
-7.  *Verify:* The correct list of workouts for that day is gathered and formatted.
+7.  *Verify:* The correct list of workouts for that day is gathered and formatted with their respective emojis and a medium-formatted date on the first line.

@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import com.ayogeshwaran.workoutlogger.R
 import com.ayogeshwaran.workoutlogger.domain.model.WorkoutEntry
 import com.ayogeshwaran.workoutlogger.domain.model.localizedType
+import com.ayogeshwaran.workoutlogger.domain.model.getEmoji
 import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -214,15 +215,16 @@ fun shareWorkouts(context: Context, dateString: String, workouts: List<WorkoutEn
     val playStoreLink = "https://play.google.com/store/apps/details?id=$packageName"
     
     val stringBuilder = java.lang.StringBuilder()
-    stringBuilder.append("💪 My Workouts for $dateString:\n")
+    stringBuilder.append("📅 $dateString\n")
     
     workouts.forEach { workout ->
         val displayName = workout.localizedType(context.resources)
+        val emoji = workout.getEmoji()
         if (workout.notes.isNotBlank()) {
             val cleanNotes = workout.notes.trim().replace("\n", ", ")
-            stringBuilder.append("• $displayName ($cleanNotes)\n")
+            stringBuilder.append("• $emoji $displayName ($cleanNotes)\n")
         } else {
-            stringBuilder.append("• $displayName\n")
+            stringBuilder.append("• $emoji $displayName\n")
         }
     }
     

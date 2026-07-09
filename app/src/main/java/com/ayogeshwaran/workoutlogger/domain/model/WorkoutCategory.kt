@@ -51,6 +51,11 @@ fun WorkoutEntry.localizedType(resources: android.content.res.Resources): String
     return preset?.localizedName(resources) ?: workoutType
 }
 
+fun WorkoutEntry.getEmoji(): String {
+    val preset = PresetWorkoutTypes.find { it.name.equals(workoutType, ignoreCase = true) }
+    return preset?.emoji ?: "💪"
+}
+
 val PresetWorkoutTypes = listOf(
     // Cardio & General
     WorkoutType("Running", "🏃", WorkoutCategory.CARDIO, R.string.workout_type_running),
