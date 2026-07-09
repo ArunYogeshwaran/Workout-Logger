@@ -17,15 +17,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
@@ -63,6 +61,7 @@ import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.content.edit
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -550,7 +549,7 @@ fun HomeScreen(
                                     },
                                     placeholder = {
                                         val placeholderRes =
-                                            if (workoutType.category == com.ayogeshwaran.workoutlogger.domain.model.WorkoutCategory.CARDIO) {
+                                            if (workoutType.category == WorkoutCategory.CARDIO) {
                                                 R.string.notes_placeholder_cardio
                                             } else {
                                                 R.string.notes_placeholder_weights
@@ -561,14 +560,20 @@ fun HomeScreen(
                                     singleLine = false,
                                     maxLines = 3,
                                     trailingIcon = {
-                                        val suggestions = notesSuggestions[workoutType] ?: emptyList()
-                                        val filteredSuggestions = suggestions.filter { it != noteValue }
+                                        val suggestions =
+                                            notesSuggestions[workoutType] ?: emptyList()
+                                        val filteredSuggestions =
+                                            suggestions.filter { it != noteValue }
                                         Row(
                                             verticalAlignment = Alignment.CenterVertically
                                         ) {
                                             if (filteredSuggestions.isNotEmpty()) {
                                                 Box {
-                                                    var showDropdown by remember { mutableStateOf(false) }
+                                                    var showDropdown by remember {
+                                                        mutableStateOf(
+                                                            false
+                                                        )
+                                                    }
                                                     IconButton(onClick = { showDropdown = true }) {
                                                         Icon(
                                                             imageVector = Icons.Default.ArrowDropDown,

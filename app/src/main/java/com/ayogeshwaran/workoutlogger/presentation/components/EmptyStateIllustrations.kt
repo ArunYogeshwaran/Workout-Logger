@@ -229,7 +229,7 @@ fun FlinkLogBrandLogo(modifier: Modifier = Modifier) {
     val primaryColor = MaterialTheme.colorScheme.primary
     val secondaryColor = MaterialTheme.colorScheme.secondary
     val primaryContainer = MaterialTheme.colorScheme.primaryContainer
-    
+
     Box(
         modifier = modifier.aspectRatio(1f),
         contentAlignment = Alignment.Center
@@ -237,7 +237,7 @@ fun FlinkLogBrandLogo(modifier: Modifier = Modifier) {
         Canvas(modifier = Modifier.fillMaxSize()) {
             val width = size.width
             val height = size.height
-            
+
             // Soft background circular glow
             drawCircle(
                 color = primaryColor.copy(alpha = 0.04f),
@@ -333,7 +333,7 @@ fun FlinkLogBrandLogo(modifier: Modifier = Modifier) {
             )
 
             // --- BOTTOM PORTION: Log Entries (Y: 0.61f to 0.83f) ---
-            
+
             // Log Entry 1 (Y: 0.68f)
             val row1Y = height * 0.68f
             val check1Path = Path().apply {

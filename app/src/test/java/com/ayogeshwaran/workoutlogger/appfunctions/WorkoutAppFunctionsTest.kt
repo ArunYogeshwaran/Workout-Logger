@@ -132,7 +132,7 @@ class WorkoutAppFunctionsTest {
     @Test
     fun suggestWorkout_weekdayPattern_suggestsFrequentWeekdayWorkout() = runTest(testDispatcher) {
         val today = Calendar.getInstance()
-        val currentDayOfWeek = today.get(Calendar.DAY_OF_WEEK)
+        today.get(Calendar.DAY_OF_WEEK)
 
         // Log "Arms" on the same weekday 7 days ago, 14 days ago, and 21 days ago
         for (i in 1..3) {

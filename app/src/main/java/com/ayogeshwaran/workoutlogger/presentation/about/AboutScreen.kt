@@ -42,10 +42,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.net.toUri
 import com.ayogeshwaran.workoutlogger.R
 import com.google.android.gms.oss.licenses.v2.OssLicensesMenuActivity
@@ -128,7 +128,10 @@ fun AboutScreen(
                 Spacer(modifier = Modifier.height(12.dp))
                 PrivacyPolicyLinkCard(
                     onClick = {
-                        openUrl(context, "https://raw.githubusercontent.com/ArunYogeshwaran/Workout-Logger/main/PRIVACY_POLICY.md")
+                        openUrl(
+                            context,
+                            "https://raw.githubusercontent.com/ArunYogeshwaran/Workout-Logger/main/PRIVACY_POLICY.md"
+                        )
                     }
                 )
                 Spacer(modifier = Modifier.height(16.dp))

@@ -9,11 +9,15 @@ policy explains how the App handles your information.
 
 ## Data Collection & Open Source Transparency
 
-**FlinkLog is 100% open-source and does not collect, store, or transmit any personal data to external servers.**
+**FlinkLog is 100% open-source and does not collect, store, or transmit any personal data to
+external servers.**
 
-Because the App is fully open-source under the GPLv3 license, the entire codebase is public and auditable. You can inspect the source code on GitHub to verify that there are no tracking SDKs, advertising libraries, or hidden network permissions.
+Because the App is fully open-source under the GPLv3 license, the entire codebase is public and
+auditable. You can inspect the source code on GitHub to verify that there are no tracking SDKs,
+advertising libraries, or hidden network permissions.
 
-All workout data you enter (workout type, date, and time) is stored **exclusively on your device** using a local database. No data ever leaves your device.
+All workout data you enter (workout type, date, and time) is stored **exclusively on your device**
+using a local database. No data ever leaves your device.
 
 ## Data We Do NOT Collect
 
@@ -54,6 +58,7 @@ data is collected or transmitted to external servers.
 ## Children's Privacy
 
 The App does not knowingly collect any personal information from anyone, including children under
+
 13. Since no data is collected at all, the App is safe for users of all ages.
 
 ## Changes to This Policy
@@ -63,10 +68,12 @@ updated" date.
 
 ## Contact & Support
 
-If you have questions or inquiries about this privacy policy, please reach out by opening an issue on the official GitHub repository or contacting the developer:
+If you have questions or inquiries about this privacy policy, please reach out by opening an issue
+on the official GitHub repository or contacting the developer:
 
-*   **GitHub Repository**: [https://github.com/ArunYogeshwaran/Workout-Logger](https://github.com/ArunYogeshwaran/Workout-Logger)
-*   **Email**: h.arunbuilds+workoutlogger [at] gmail [dot] com
+* **GitHub Repository
+  **: [https://github.com/ArunYogeshwaran/Workout-Logger](https://github.com/ArunYogeshwaran/Workout-Logger)
+* **Email**: h.arunbuilds+workoutlogger [at] gmail [dot] com
 
 ---
 

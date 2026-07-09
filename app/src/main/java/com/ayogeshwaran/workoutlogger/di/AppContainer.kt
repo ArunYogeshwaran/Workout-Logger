@@ -10,8 +10,8 @@ import com.ayogeshwaran.workoutlogger.domain.usecase.DeleteCustomWorkoutTypeUseC
 import com.ayogeshwaran.workoutlogger.domain.usecase.DeleteWorkoutUseCase
 import com.ayogeshwaran.workoutlogger.domain.usecase.GetCustomWorkoutTypesUseCase
 import com.ayogeshwaran.workoutlogger.domain.usecase.GetDatesWithWorkoutsUseCase
-import com.ayogeshwaran.workoutlogger.domain.usecase.GetWorkoutsForDateUseCase
 import com.ayogeshwaran.workoutlogger.domain.usecase.GetRecentNotesUseCase
+import com.ayogeshwaran.workoutlogger.domain.usecase.GetWorkoutsForDateUseCase
 
 class AppContainer(context: Context) {
 

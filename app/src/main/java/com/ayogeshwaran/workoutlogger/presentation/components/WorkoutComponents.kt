@@ -1,5 +1,8 @@
 package com.ayogeshwaran.workoutlogger.presentation.components
 
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,13 +17,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import android.content.Intent
-import android.content.ActivityNotFoundException
-import android.content.Context
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -43,8 +42,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ayogeshwaran.workoutlogger.R
 import com.ayogeshwaran.workoutlogger.domain.model.WorkoutEntry
-import com.ayogeshwaran.workoutlogger.domain.model.localizedType
 import com.ayogeshwaran.workoutlogger.domain.model.getEmoji
+import com.ayogeshwaran.workoutlogger.domain.model.localizedType
 import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -213,10 +212,10 @@ fun EditNotesDialog(
 fun shareWorkouts(context: Context, dateString: String, workouts: List<WorkoutEntry>) {
     val packageName = context.packageName
     val playStoreLink = "https://play.google.com/store/apps/details?id=$packageName"
-    
+
     val stringBuilder = java.lang.StringBuilder()
     stringBuilder.append("📅 $dateString\n")
-    
+
     workouts.forEach { workout ->
         val displayName = workout.localizedType(context.resources)
         val emoji = workout.getEmoji()
@@ -227,9 +226,9 @@ fun shareWorkouts(context: Context, dateString: String, workouts: List<WorkoutEn
             stringBuilder.append("• $emoji $displayName\n")
         }
     }
-    
+
     stringBuilder.append("\nLog your workouts offline, ad-free, and privately with FlinkLog! Download it here:\n$playStoreLink")
-    
+
     val intent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"
         putExtra(Intent.EXTRA_TEXT, stringBuilder.toString())
